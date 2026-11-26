@@ -254,6 +254,8 @@ public static class WorkCalendar
     /// <summary>"Mon 12/1", the way Project shows dates in the task sheet.</summary>
     public static string Short(DateTime d) => d.ToString("ddd M/d");
     public static string Long(DateTime d) => d.ToString("dddd, MMMM d, yyyy");
+    /// <summary>"Mon, Nov 23, 2026"</summary>
+    public static string Medium(DateTime d) => d.ToString("ddd, MMM d, yyyy");
 }
 
 /// <summary>

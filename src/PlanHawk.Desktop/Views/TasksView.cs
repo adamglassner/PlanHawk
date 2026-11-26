@@ -20,7 +20,7 @@ public sealed class TasksView : UserControl
 
     private static readonly (string Title, double Width)[] Columns =
     [
-        ("Task", -2.2), ("Project", -1.1), ("Start", 96), ("Finish", 96), ("Duration", 84), ("Progress", 150), ("Assigned to", -1.3), ("Status", 118),
+        ("Task", -2.2), ("Start", 88), ("Finish", 88), ("Duration", 80), ("Progress", 140), ("Assigned to", -1.2), ("Status", 112),
     ];
 
     public TasksView()
@@ -206,26 +206,21 @@ public sealed class TasksView : UserControl
         name.Children.Add(texts);
         g.Children.Add(name.At(0));
 
-        var project = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(8, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center };
-        project.Children.Add(Ui.Dot(t.Project.Color, 8).Also(d => d.Margin = new Thickness(0, 0, 8, 0)));
-        project.Children.Add(Ui.Text(t.Project.Name, size: 12.5));
-        g.Children.Add(project.At(1));
+        g.Children.Add(Cell(WorkCalendar.Short(t.Start)).At(1));
+        g.Children.Add(Cell(WorkCalendar.Short(t.Finish)).At(2));
+        g.Children.Add(Cell(t.DurationText).At(3));
 
-        g.Children.Add(Cell(WorkCalendar.Short(t.Start)).At(2));
-        g.Children.Add(Cell(WorkCalendar.Short(t.Finish)).At(3));
-        g.Children.Add(Cell(t.DurationText).At(4));
-
-        if (t.IsMilestone) g.Children.Add(Cell("Milestone", muted: true).At(5));
+        if (t.IsMilestone) g.Children.Add(Cell("Milestone", muted: true).At(4));
         else
         {
             var progress = new DockPanel { Margin = new Thickness(8, 0, 12, 0), VerticalAlignment = VerticalAlignment.Center };
             progress.Children.Add(Ui.Text($"{t.PercentComplete:0}%", size: 12).Also(x => { x.Width = 36; x.TextAlignment = TextAlignment.Right; DockPanel.SetDock(x, Dock.Right); }));
             progress.Children.Add(GanttView.Progress(t.PercentComplete).Also(p => p.Margin = new Thickness(0, 0, 4, 0)));
-            g.Children.Add(progress.At(5));
+            g.Children.Add(progress.At(4));
         }
 
-        g.Children.Add(Cell(t.Resources.Length == 0 ? "—" : t.ResourceText, muted: t.Resources.Length == 0).At(6));
-        g.Children.Add(GanttView.StatePill(t).Also(p => { p.Margin = new Thickness(8, 0, 8, 0); p.VerticalAlignment = VerticalAlignment.Center; }).At(7));
+        g.Children.Add(Cell(t.Resources.Length == 0 ? "—" : t.ResourceText, muted: t.Resources.Length == 0).At(5));
+        g.Children.Add(GanttView.StatePill(t).Also(p => { p.Margin = new Thickness(8, 0, 8, 0); p.VerticalAlignment = VerticalAlignment.Center; }).At(6));
 
         var b = new Button { Style = Ui.S("RowButton"), Content = g, MinHeight = 52, Padding = new Thickness(0, 6, 0, 6), ToolTip = "Open on the Gantt chart" };
         b.Click += (_, _) => MainWindow.Instance?.OpenTask(t);

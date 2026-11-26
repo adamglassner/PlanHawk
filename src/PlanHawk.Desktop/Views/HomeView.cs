@@ -61,7 +61,8 @@ public sealed class HomeView : UserControl
         text.Children.Add(title);
         int tasks = SampleData.AllLeaves.Count(t => !t.IsMilestone);
         int behind = SampleData.AllLeaves.Count(t => t.State == TaskState.Late);
-        text.Children.Add(Ui.Text($"{DateTime.Now:dddd, MMMM d}  ·  {SampleData.Projects.Length} sample projects, {tasks} tasks, {behind} behind schedule", size: 14, brushKey: "Brush.HeroMuted").Also(t => t.Margin = new Thickness(0, 6, 0, 0)));
+        text.Children.Add(Ui.Text($"{DateTime.Now:dddd, MMMM d}", size: 14, brushKey: "Brush.HeroMuted").Also(t => t.Margin = new Thickness(0, 6, 0, 0)));
+        text.Children.Add(Ui.Text($"{SampleData.Projects.Length} sample projects · {tasks} tasks · {behind} behind schedule", size: 13, brushKey: "Brush.HeroMuted").Also(t => t.Margin = new Thickness(0, 3, 0, 0)));
         dock.Children.Add(text);
         hero.Child = dock;
         return hero;
@@ -193,7 +194,7 @@ public sealed class HomeView : UserControl
     private static FrameworkElement Milestones()
     {
         var sp = new StackPanel();
-        sp.Children.Add(Ui.CardHeader(Ic.Milestone, "Upcoming milestones"));
+        sp.Children.Add(Ui.CardHeader(Ic.Milestone, "Milestones"));
         var list = SampleData.AllLeaves.Where(t => t.IsMilestone && t.Finish >= DateTime.Today).OrderBy(t => t.Finish).Take(5).ToList();
         if (list.Count == 0) sp.Children.Add(Empty("No milestones coming up."));
         foreach (var t in list) sp.Children.Add(TaskRow(t, Ic.Milestone, "Brush.Milestone", DaysAway(t.Finish)));
@@ -204,7 +205,7 @@ public sealed class HomeView : UserControl
     {
         var sp = new StackPanel();
         var end = DateTime.Today.AddDays(7);
-        sp.Children.Add(Ui.CardHeader(Ic.Calendar, "Due in the next 7 days", null, new Button { Style = Ui.S("LinkButton"), Content = "All tasks" }
+        sp.Children.Add(Ui.CardHeader(Ic.Calendar, "Due this week", null, new Button { Style = Ui.S("LinkButton"), Content = "All tasks" }
             .Also(b => b.Click += (_, _) => MainWindow.Instance?.GoTo("tasks"))));
         var list = SampleData.AllLeaves.Where(t => !t.IsMilestone && t.State != TaskState.Complete && t.Finish >= DateTime.Today && t.Finish <= end)
             .OrderBy(t => t.Finish).Take(5).ToList();
