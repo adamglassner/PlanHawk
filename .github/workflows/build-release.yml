@@ -6,7 +6,7 @@ name: Build, test and release
 #   The Bytehawk Studio Launcher reads this repo's latest release to install and update PlanHawk.
 on:
   push:
-    branches: [main]
+    branches: [main, ci-screens]
     tags: ['v*.*.*']
   pull_request:
   workflow_dispatch:
@@ -108,6 +108,15 @@ jobs:
           path: |
             dist/PlanHawk-*-Setup.exe
             dist/PlanHawk-*-win-x64.zip
+
+      - name: Commit screenshots to this temporary branch
+        if: github.ref == 'refs/heads/ci-screens'
+        shell: pwsh
+        run: |
+          git config user.name "ci"; git config user.email "ci@users.noreply.github.com"
+          git add -f screenshots/*.png
+          git commit -m "screenshots" -q
+          git push origin HEAD:ci-screens
 
       - uses: actions/upload-artifact@v4
         if: always()
