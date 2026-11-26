@@ -757,9 +757,12 @@ public sealed class GanttView : UserControl
         var t = Selected;
         if (t == null)
         {
-            var hint = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
-            hint.Children.Add(Ui.Icon(Ic.Info, 16, "Brush.Accent").Also(i => i.Margin = new Thickness(0, 0, 10, 0)));
-            hint.Children.Add(Ui.Text($"Select a task to see its dates, progress, predecessors and successors.  {Project.Description}", muted: true));
+            var hint = new DockPanel { VerticalAlignment = VerticalAlignment.Center };
+            hint.Children.Add(Ui.Icon(Ic.Info, 18, "Brush.Accent").Also(i => { i.Margin = new Thickness(0, 2, 12, 0); i.VerticalAlignment = VerticalAlignment.Top; DockPanel.SetDock(i, Dock.Left); }));
+            var lines = new StackPanel();
+            lines.Children.Add(Ui.Wrap(Project.Description, size: 13.5));
+            lines.Children.Add(Ui.Wrap("Select a task to see its dates, progress, predecessors and successors. Use the arrow keys to move between tasks.", muted: true, size: 12.5).Also(w => w.Margin = new Thickness(0, 4, 0, 0)));
+            hint.Children.Add(lines);
             _details.Content = hint;
             return;
         }
@@ -773,8 +776,8 @@ public sealed class GanttView : UserControl
         // Name, state, notes
         var about = new StackPanel { Margin = new Thickness(0, 0, 24, 0) };
         var titleRow = new DockPanel();
-        var edit = Ui.SoonButton("Editing tasks", Ic.Wrench, "Task information", "GhostButton");
-        edit.Padding = new Thickness(10, 5, 10, 5);
+        var edit = Ui.ToolButton("Editing tasks", Ic.Wrench, "Task information (double-click a task)");
+        edit.Margin = new Thickness(6, 0, 0, 0);
         DockPanel.SetDock(edit, Dock.Right);
         titleRow.Children.Add(edit);
         var icon = t.IsMilestone ? Ic.Milestone : t.IsSummary ? Ic.Tree : Ic.Task;
@@ -794,8 +797,8 @@ public sealed class GanttView : UserControl
         // Dates and progress
         var dates = new StackPanel { Margin = new Thickness(0, 0, 24, 0) };
         dates.Children.Add(new TextBlock { Text = "SCHEDULE", Style = Ui.S("SectionLabel") });
-        dates.Children.Add(Pair("Start", WorkCalendar.Long(t.Start)));
-        dates.Children.Add(Pair("Finish", WorkCalendar.Long(t.Finish)));
+        dates.Children.Add(Pair("Start", WorkCalendar.Medium(t.Start)));
+        dates.Children.Add(Pair("Finish", WorkCalendar.Medium(t.Finish)));
         dates.Children.Add(Pair("Duration", t.DurationText));
         if (!t.IsMilestone)
         {

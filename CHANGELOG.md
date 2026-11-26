@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-11-25)
+
+Polish for smaller screens.
+
+- Gantt chart: the hint under the chart wraps instead of running off the edges; task details use shorter dates and a compact edit button.
+- Dependencies: the diagram starts at the top left, scrolls to the selected task, and the color key floats over the diagram instead of crowding the toolbar.
+- Home: shorter card titles and a two-line greeting.
+- Tasks: the table drops the Project column (tasks are already grouped by project), so names have more room.
+
 ## 0.1.0 (2026-11-25)
 
 First preview: the PlanHawk shell in Bytehawk's Hawkline style.

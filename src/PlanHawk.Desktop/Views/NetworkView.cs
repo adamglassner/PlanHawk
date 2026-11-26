@@ -24,7 +24,7 @@ public sealed class NetworkView : UserControl
     public int NodeCount => _nodes.Count;
 
     private readonly Dictionary<ProjectTask, Rect> _nodes = [];
-    private readonly Canvas _canvas = new() { Background = Brushes.Transparent };
+    private readonly Canvas _canvas = new() { Background = Brushes.Transparent, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
     private readonly ScrollViewer _scroll = new() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto, VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Focusable = false };
     private readonly StackPanel _side = new();
     private readonly Button _projectButton = new() { Style = Ui.S("BaseButton"), Padding = new Thickness(8, 6, 10, 6), Margin = new Thickness(0, 0, 18, 0) };
@@ -44,6 +44,7 @@ public sealed class NetworkView : UserControl
         _scroll.Content = _canvas;
         _scroll.SetResourceReference(BackgroundProperty, "Brush.Bg");
         body.Children.Add(_scroll.At(0));
+        body.Children.Add(BuildLegend().At(0));
         var side = new Border { BorderThickness = new Thickness(1, 0, 0, 0) };
         side.SetResourceReference(Border.BackgroundProperty, "Brush.Surface");
         side.SetResourceReference(Border.BorderBrushProperty, "Brush.Border");
@@ -53,6 +54,7 @@ public sealed class NetworkView : UserControl
         Content = root;
 
         _canvas.MouseLeftButtonDown += (_, e) => { if (e.OriginalSource == _canvas) Select(null); };
+        Loaded += (_, _) => { if (Selected != null) Select(Selected); };
         ShowProject(project);
         if (select != null) Select(select.IsSummary ? select.Descendants.FirstOrDefault(d => !d.IsSummary) : select);
     }
@@ -100,14 +102,6 @@ public sealed class NetworkView : UserControl
         bar.SetResourceReference(Border.BorderBrushProperty, "Brush.Border");
         var dock = new DockPanel();
 
-        var legend = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
-        legend.Children.Add(Legend("Brush.Bar", "Task"));
-        legend.Children.Add(Legend("Brush.Critical", "Critical"));
-        legend.Children.Add(Legend("Brush.Milestone", "Milestone"));
-        legend.Children.Add(Legend("Brush.Positive", "Complete"));
-        DockPanel.SetDock(legend, Dock.Right);
-        dock.Children.Add(legend);
-
         _projectButton.Click += (_, _) => ShowProjectMenu();
         System.Windows.Automation.AutomationProperties.SetName(_projectButton, "Switch project");
         dock.Children.Add(_projectButton.Also(b => DockPanel.SetDock(b, Dock.Left)));
@@ -125,9 +119,23 @@ public sealed class NetworkView : UserControl
         return bar;
     }
 
+    /// <summary>Color key, floating at the bottom left of the diagram.</summary>
+    private static FrameworkElement BuildLegend()
+    {
+        var legend = new StackPanel { Orientation = Orientation.Horizontal };
+        legend.Children.Add(Legend("Brush.Bar", "Task"));
+        legend.Children.Add(Legend("Brush.Critical", "Critical"));
+        legend.Children.Add(Legend("Brush.Milestone", "Milestone"));
+        legend.Children.Add(Legend("Brush.Positive", "Complete"));
+        var card = new Border { CornerRadius = new CornerRadius(10), BorderThickness = new Thickness(1), Padding = new Thickness(2, 7, 14, 7), Margin = new Thickness(16, 0, 0, 22), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Bottom, Child = legend, IsHitTestVisible = false };
+        card.SetResourceReference(Border.BackgroundProperty, "Brush.Surface");
+        card.SetResourceReference(Border.BorderBrushProperty, "Brush.Border");
+        return card;
+    }
+
     private static FrameworkElement Legend(string brush, string text)
     {
-        var sp = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(14, 0, 0, 0) };
+        var sp = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(12, 0, 0, 0) };
         var swatch = new Border { Width = 12, Height = 12, CornerRadius = new CornerRadius(3), Margin = new Thickness(0, 0, 6, 0) };
         swatch.SetResourceReference(Border.BackgroundProperty, brush);
         sp.Children.Add(swatch);
