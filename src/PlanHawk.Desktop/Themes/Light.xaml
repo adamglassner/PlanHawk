@@ -1,0 +1,47 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Light palette (Hawkline, PlanHawk teal). Every key here must also exist in Dark.xaml. -->
+    <SolidColorBrush x:Key="Brush.Bg" Color="#F2F6F6" />
+    <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="#EAF1F1" />
+    <SolidColorBrush x:Key="Brush.Border" Color="#DCE6E6" />
+    <SolidColorBrush x:Key="Brush.Skeleton" Color="#E2EBEB" />
+    <SolidColorBrush x:Key="Brush.Track" Color="#E6EEEE" />
+    <SolidColorBrush x:Key="Brush.Text" Color="#132226" />
+    <SolidColorBrush x:Key="Brush.TextMuted" Color="#55676B" />
+    <SolidColorBrush x:Key="Brush.HoverOverlay" Color="#10000000" />
+    <SolidColorBrush x:Key="Brush.Paper" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.PaperRule" Color="#EDF3F3" />
+    <SolidColorBrush x:Key="Brush.Sidebar" Color="#0F2227" />
+    <SolidColorBrush x:Key="Brush.SidebarText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.SidebarMuted" Color="#AFC6C8" />
+    <SolidColorBrush x:Key="Brush.SidebarHover" Color="#173036" />
+    <SolidColorBrush x:Key="Brush.SidebarSelected" Color="#1E3B42" />
+    <SolidColorBrush x:Key="Brush.SidebarCard" Color="#173036" />
+    <SolidColorBrush x:Key="Brush.Hero" Color="#0F2227" />
+    <SolidColorBrush x:Key="Brush.HeroText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.HeroMuted" Color="#AFC6C8" />
+    <SolidColorBrush x:Key="Brush.Accent" Color="#0E8577" />
+    <SolidColorBrush x:Key="Brush.AccentText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.AccentSoft" Color="#DDF3EF" />
+    <SolidColorBrush x:Key="Brush.Highlight" Color="#6FE0C6" />
+    <SolidColorBrush x:Key="Brush.Amber" Color="#F2A93B" />
+    <SolidColorBrush x:Key="Brush.Marker" Color="#FFF1B8" />
+    <SolidColorBrush x:Key="Brush.BarMuted" Color="#C3D3D4" />
+    <SolidColorBrush x:Key="Brush.Warn" Color="#B86A12" />
+    <SolidColorBrush x:Key="Brush.Danger" Color="#C2410C" />
+    <SolidColorBrush x:Key="Brush.Positive" Color="#1F7A55" />
+    <SolidColorBrush x:Key="Brush.ToastBg" Color="#0F2227" />
+    <SolidColorBrush x:Key="Brush.ToastText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.Bar" Color="#2BB59E" />
+    <SolidColorBrush x:Key="Brush.BarProgress" Color="#0E7A6C" />
+    <SolidColorBrush x:Key="Brush.Critical" Color="#E5684B" />
+    <SolidColorBrush x:Key="Brush.CriticalProgress" Color="#B33A20" />
+    <SolidColorBrush x:Key="Brush.Summary" Color="#24363B" />
+    <SolidColorBrush x:Key="Brush.Milestone" Color="#F2A93B" />
+    <SolidColorBrush x:Key="Brush.Weekend" Color="#F1F5F5" />
+    <SolidColorBrush x:Key="Brush.Today" Color="#E5684B" />
+    <SolidColorBrush x:Key="Brush.Arrow" Color="#5C7378" />
+    <SolidColorBrush x:Key="Brush.RowSelected" Color="#DDF3EF" />
+    <SolidColorBrush x:Key="Brush.GridLine" Color="#ECF2F2" />
+</ResourceDictionary>
